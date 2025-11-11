@@ -1,0 +1,25 @@
+import gradio as gr
+
+def recommend_treatment(journal_text, pain_level, xray_type):
+    # Exempel på AI-logik (enkel placeholder)
+    if "karies" in journal_text.lower() or pain_level > 6:
+        return "Rekommenderad behandling: Rotfyllning eller krona. Kostnad ca 4 500–7 000 kr."
+    elif "lagning" in journal_text.lower():
+        return "Rekommenderad behandling: Fyllning. Kostnad ca 1 200–2 500 kr."
+    else:
+        return "Ingen behandling krävs just nu. Följ upp inom 6 månader."
+
+ui = gr.Interface(
+    fn=recommend_treatment,
+    inputs=[
+        gr.Textbox(label="Journaltext (från T4)", placeholder="Ex. Patienten har karies på tand 14."),
+        gr.Slider(0,10, label="Smärtnivå (0–10)"),
+        gr.Radio(["Bitewing", "CBCT", "Panorama"], label="Röntgentyp")
+    ],
+    outputs=gr.Textbox(label="Förslag från Dentac"),
+    title="🦷 Dentac AI – Behandlingsförslag",
+    description="Ett AI-beslutsstöd för tandläkare. (Testversion, ingen patientdata sparas.)"
+)
+
+if __name__ == "__main__":
+    ui.launch()
